@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BETVINO Bonus Talep Formu</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(145deg, #2b0a45, #3e0c67);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      padding: 40px 50px;
+      border-radius: 15px;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 380px;
+    }
+
+    h1 {
+      font-size: 28px;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input,
+    select {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    input::placeholder {
+      color: #e0e0e0;
+    }
+
+    select option {
+      background: #2b0a45;
+      color: #fff;
+    }
+
+    button {
+      background: linear-gradient(90deg, #a146ff, #ff4de1);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .success-animation {
+      display: none;
+      font-size: 40px;
+      color: #00ff95;
+      margin-top: 20px;
+      animation: pop 0.4s ease-in-out;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>BETVINO</h1>
+    <p>Bonus Talep Formu</p>
+    <form id="bonusForm">
+      <input type="text" id="username" placeholder="Kullanıcı Adı" required />
+      <select id="bonus" required>
+        <option value="">Bonus seçiniz...</option>
+        <option>İlk yatırımınıza özel 250 freespin</option>
+        <option>%50 slot yatırım</option>
+        <option>Ertesi gün freespin yağmuru</option>
+        <option>İlk 3 yatırım iade</option>
+        <option>%20 anlık casino kayıp</option>
+        <option>Pragmatic play kazandıkça katla</option>
+        <option>Egt bell link 100 katı nakit</option>
+        <option>%20 çevrimsiz spor kayıp bonusa</option>
+        <option>Pragmatic play 1.000x bonusu</option>
+        <option>Blackjack winstreak 10 tur</option>
+        <option>Blackjack'te minimum 5 kart ile 21'e ulaşma</option>
+      </select>
+      <button type="submit">Talep Et</button>
+    </form>
+    <div class="success-animation" id="successAnim">✅</div>
+  </div>
+
+  <script>
+    const form = document.getElementById('bonusForm');
+    const successAnim = document.getElementById('successAnim');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const bonus = document.getElementById('bonus').value;
+      try {
+        const response = await fetch('/.netlify/functions/sendToSlack', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, bonus }),
+        });
+        if (response.ok) {
+          successAnim.style.display = 'block';
+          setTimeout(() => (successAnim.style.display = 'none'), 2000);
+          form.reset();
+        } else {
+          alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+        }
+      } catch (err) {
+        alert('Bağlantı hatası: ' + err.message);
+      }
+    });
+  </script>
+</body>
+</html>
