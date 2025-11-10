@@ -1,0 +1,8 @@
+[build]
+  publish = "betvino-bonus-talep"
+  functions = "betvino-bonus-talep/netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
