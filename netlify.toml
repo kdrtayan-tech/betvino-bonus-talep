@@ -1,8 +1,9 @@
 [build]
-  publish = "."
-  functions = "netlify/functions"
+command = ""            # Dikkat: Boş çift tırnak olmalı
+publish = "betvino-bonus-talep"
+functions = "netlify/functions"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+from = "/*"
+to = "/index.html"
+status = 200
