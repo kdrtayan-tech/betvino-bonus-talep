@@ -1,4 +1,5 @@
 [build]
+  command = ""  # build komutu yok
   publish = "betvino-bonus-talep"
   functions = "betvino-bonus-talep/netlify/functions"
 
