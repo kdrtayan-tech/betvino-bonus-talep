@@ -1,4 +1,4 @@
-const webhookUrl = "https://hooks.slack.com/services/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";
+const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 
 export async function handler(event, context) {
   try {
